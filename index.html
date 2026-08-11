@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>PCS AI Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PCS AI Assistant</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,6 +15,7 @@
 <div class="app">
 
     <header>
+
         <div class="logo">🤖</div>
 
         <div>
@@ -20,6 +26,7 @@
         <div class="status">
             <span></span> ONLINE
         </div>
+
     </header>
 
 
@@ -31,6 +38,8 @@
             <span>📊 MARKET</span>
             <span class="live">● LIVE</span>
         </div>
+
+        <label>Market Trend</label>
 
         <select id="trend">
             <option value="bullish">BULLISH</option>
@@ -95,7 +104,7 @@
     </section>
 
 
-    <!-- TRADE INPUT -->
+    <!-- TRADE SETUP -->
 
     <section class="panel">
 
@@ -106,38 +115,32 @@
         <input
             type="number"
             id="balance"
-            placeholder="Account Balance"
-        >
+            placeholder="Account Balance">
 
         <input
             type="number"
             id="risk"
-            placeholder="Risk %"
-        >
+            placeholder="Risk %">
 
         <input
             type="number"
             id="entry"
-            placeholder="Entry Price"
-        >
+            placeholder="Entry Price">
 
         <input
             type="number"
             id="stop"
-            placeholder="Stop Loss"
-        >
+            placeholder="Stop Loss">
 
         <input
             type="number"
             id="takeProfit"
-            placeholder="Take Profit"
-        >
+            placeholder="Take Profit">
 
         <input
             type="number"
             id="value"
-            placeholder="Value per 1.00 price move"
-        >
+            placeholder="Value per 1.00 price move">
 
         <button id="analyze">
             ANALYZE PCS
@@ -162,10 +165,38 @@
             Waiting for analysis...
         </p>
 
+
+        <!-- CONFIDENCE -->
+
+        <div class="confidence-box">
+
+            <p class="confidence-title">
+                PCS TRADE CONFIDENCE
+            </p>
+
+            <div class="confidence-bar">
+
+                <div
+                    id="confidenceFill"
+                    class="confidence-fill">
+                </div>
+
+            </div>
+
+            <h2 id="confidenceValue">
+                0%
+            </h2>
+
+            <p id="confidenceStatus">
+                WAITING FOR ANALYSIS
+            </p>
+
+        </div>
+
     </section>
 
 
-    <!-- RESULTS -->
+    <!-- TRADE ANALYSIS -->
 
     <section class="panel">
 
@@ -211,12 +242,13 @@
 
 
     <footer>
-        PCS AI v1.3 • Decision Engine
+        PCS AI v1.5 • Testing Mode
     </footer>
 
 </div>
 
+
 <script src="script.js"></script>
 
 </body>
-  </html>
+</html>
