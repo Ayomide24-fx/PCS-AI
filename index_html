@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PCS AI Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+
+        <div class="logo">🤖</div>
+
+        <div>
+            <h1>PCS AI</h1>
+            <p>PRECISION CONFIRMATION STRATEGY</p>
+        </div>
+
+        <div class="status">
+            <span></span> ONLINE
+        </div>
+
+    </header>
+
+
+    <!-- MARKET -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>📊 MARKET</span>
+            <span class="live">● LIVE</span>
+        </div>
+
+        <label>Market Trend</label>
+
+        <select id="trend">
+            <option value="bullish">BULLISH</option>
+            <option value="bearish">BEARISH</option>
+        </select>
+
+        <div class="market">
+
+            <div>
+                <small>PAIR</small>
+                <strong>XAUUSD</strong>
+            </div>
+
+            <div>
+                <small>TREND</small>
+                <strong id="trendDisplay" class="bullish">
+                    ▲ BULLISH
+                </strong>
+            </div>
+
+            <div>
+                <small>TIMEFRAME</small>
+                <strong>M5</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PCS CONFIRMATION -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>🔎 PCS CONFIRMATION</span>
+        </div>
+
+        <label>PCS Confirmation</label>
+
+        <select id="pcs">
+            <option value="yes">YES</option>
+            <option value="no">NO</option>
+        </select>
+
+
+        <label>Heiken Ashi</label>
+
+        <select id="heiken">
+            <option value="yes">YES</option>
+            <option value="no">NO</option>
+        </select>
+
+
+        <label>Support / Resistance</label>
+
+        <select id="support">
+            <option value="yes">YES</option>
+            <option value="no">NO</option>
+        </select>
+
+    </section>
+
+
+    <!-- TRADE SETUP -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>📋 TRADE SETUP</span>
+        </div>
+
+        <input
+            type="number"
+            id="balance"
+            placeholder="Account Balance">
+
+        <input
+            type="number"
+            id="risk"
+            placeholder="Risk %">
+
+        <input
+            type="number"
+            id="entry"
+            placeholder="Entry Price">
+
+        <input
+            type="number"
+            id="stop"
+            placeholder="Stop Loss">
+
+        <input
+            type="number"
+            id="takeProfit"
+            placeholder="Take Profit">
+
+        <input
+            type="number"
+            id="value"
+            placeholder="Value per 1.00 price move">
+
+        <button id="analyze">
+            ANALYZE PCS
+        </button>
+
+    </section>
+
+
+    <!-- SIGNAL -->
+
+    <section class="signal-panel">
+
+        <p class="signal-title">
+            PCS AI SIGNAL
+        </p>
+
+        <div id="signal" class="signal">
+            🟡 WAIT
+        </div>
+
+        <p id="reason" class="reason">
+            Waiting for analysis...
+        </p>
+
+
+        <!-- CONFIDENCE -->
+
+        <div class="confidence-box">
+
+            <p class="confidence-title">
+                PCS TRADE CONFIDENCE
+            </p>
+
+            <div class="confidence-bar">
+
+                <div
+                    id="confidenceFill"
+                    class="confidence-fill">
+                </div>
+
+            </div>
+
+            <h2 id="confidenceValue">
+                0%
+            </h2>
+
+            <p id="confidenceStatus">
+                WAITING FOR ANALYSIS
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRADE ANALYSIS -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>📊 TRADE ANALYSIS</span>
+        </div>
+
+        <div class="trade-grid">
+
+            <div>
+                <small>RISK AMOUNT</small>
+                <strong id="riskResult">$--</strong>
+            </div>
+
+            <div>
+                <small>SL DISTANCE</small>
+                <strong id="distanceResult">--</strong>
+            </div>
+
+            <div>
+                <small>POSITION SIZE</small>
+                <strong id="positionResult">--</strong>
+            </div>
+
+            <div>
+                <small>TP DISTANCE</small>
+                <strong id="rewardResult">--</strong>
+            </div>
+
+            <div>
+                <small>R:R</small>
+                <strong id="rrResult" class="cyan">--</strong>
+            </div>
+
+            <div>
+                <small>RISK LEVEL</small>
+                <strong id="riskLevel">--</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        PCS AI v1.5 • Testing Mode
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+  </html>
