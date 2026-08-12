@@ -1,4 +1,263 @@
 // =====================================================
+// PCS AI BACKEND CONNECTION
+// =====================================================
+
+const PCS_BACKEND =
+    "https://pcs-ai.onrender.com";
+
+
+// =====================================================
+// BACKEND HEALTH CHECK
+// =====================================================
+
+async function checkBackend() {
+
+    try {
+
+        const response =
+            await fetch(
+                PCS_BACKEND + "/api/health"
+            );
+
+        if (!response.ok) {
+            throw new Error("Backend unavailable");
+        }
+
+        const data =
+            await response.json();
+
+        console.log(
+            "PCS AI Backend:",
+            data
+        );
+
+
+        // Update system status
+
+        const systemRows =
+            document.querySelectorAll(
+                ".system-row"
+            );
+
+
+        if (systemRows.length >= 5) {
+
+            systemRows[0]
+                .querySelector("strong")
+                .innerHTML = "ONLINE";
+
+            systemRows[0]
+                .querySelector("strong")
+                .className = "ready";
+
+
+            systemRows[1]
+                .querySelector("strong")
+                .innerHTML =
+                    data.tradingView === "pending"
+                        ? "PENDING"
+                        : "ONLINE";
+
+
+            systemRows[2]
+                .querySelector("strong")
+                .innerHTML =
+                    data.mt5 === "pending"
+                        ? "PENDING"
+                        : "ONLINE";
+
+        }
+
+
+        console.log(
+            "PCS AI backend connection successful."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "PCS AI backend connection failed:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// GET MARKET DATA
+// =====================================================
+
+async function getMarketData(
+    symbol,
+    timeframe
+) {
+
+    try {
+
+        const url =
+            PCS_BACKEND +
+            "/api/market?symbol=" +
+            encodeURIComponent(symbol) +
+            "&timeframe=" +
+            encodeURIComponent(timeframe);
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Market request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Market data:",
+            data
+        );
+
+
+        return data;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Market data error:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+// =====================================================
+// UPDATE MARKET DATA
+// =====================================================
+
+async function updateRealMarketData() {
+
+    const market =
+        document.getElementById("market").value;
+
+
+    const timeframe =
+        document.getElementById("timeframe").value;
+
+
+    const price =
+        document.getElementById(
+            "currentPrice"
+        );
+
+
+    const status =
+        document.getElementById(
+            "priceStatus"
+        );
+
+
+    status.innerHTML =
+        "● CONNECTING TO PCS AI BACKEND";
+
+
+    const data =
+        await getMarketData(
+            market,
+            timeframe
+        );
+
+
+    if (!data) {
+
+        price.innerHTML =
+            "DATA ERROR";
+
+        status.innerHTML =
+            "● BACKEND CONNECTION ERROR";
+
+        return;
+
+    }
+
+
+    if (data.price === null) {
+
+        price.innerHTML =
+            "WAITING FOR PRICE";
+
+        status.innerHTML =
+            "● BACKEND ONLINE • MARKET DATA PENDING";
+
+        return;
+
+    }
+
+
+    price.innerHTML =
+        data.price;
+
+
+    status.innerHTML =
+        "● LIVE • " +
+        data.symbol +
+        " • " +
+        data.timeframe;
+
+}
+
+
+// =====================================================
+// MARKET / TIMEFRAME CHANGE
+// =====================================================
+
+document
+    .getElementById("market")
+    .addEventListener(
+        "change",
+        updateRealMarketData
+    );
+
+
+document
+    .getElementById("timeframe")
+    .addEventListener(
+        "change",
+        updateRealMarketData
+    );
+
+
+// =====================================================
+// INITIALIZE BACKEND
+// =====================================================
+
+window.addEventListener(
+    "load",
+    function () {
+
+        checkBackend();
+
+        updateRealMarketData();
+
+    }
+);
+// =====================================================
 // PCS AI MASTER
 // PHASE 1 DASHBOARD ENGINE
 // =====================================================
