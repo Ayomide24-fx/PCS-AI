@@ -1,7 +1,7 @@
 document.getElementById("analyze").onclick = function() {
 
     // =========================
-    // MARKET CONDITIONS
+    // PCS CONDITIONS
     // =========================
 
     var trend =
@@ -22,22 +22,34 @@ document.getElementById("analyze").onclick = function() {
     // =========================
 
     var balance =
-        Number(document.getElementById("balance").value);
+        Number(
+            document.getElementById("balance").value
+        );
 
     var risk =
-        Number(document.getElementById("risk").value);
+        Number(
+            document.getElementById("risk").value
+        );
 
     var entry =
-        Number(document.getElementById("entry").value);
+        Number(
+            document.getElementById("entry").value
+        );
 
     var stop =
-        Number(document.getElementById("stop").value);
+        Number(
+            document.getElementById("stop").value
+        );
 
     var takeProfit =
-        Number(document.getElementById("takeProfit").value);
+        Number(
+            document.getElementById("takeProfit").value
+        );
 
     var value =
-        Number(document.getElementById("value").value);
+        Number(
+            document.getElementById("value").value
+        );
 
 
     // =========================
@@ -53,7 +65,9 @@ document.getElementById("analyze").onclick = function() {
         value <= 0
     ) {
 
-        alert("Please complete all trade fields.");
+        alert(
+            "Please complete all trade fields."
+        );
 
         return;
     }
@@ -72,19 +86,26 @@ document.getElementById("analyze").onclick = function() {
     var rewardDistance =
         Math.abs(takeProfit - entry);
 
-    if (stopDistance <= 0) {
 
-        alert("Stop Loss cannot be the same as Entry.");
+    if (stopDistance === 0) {
+
+        alert(
+            "Entry and Stop Loss cannot be the same."
+        );
+
+        return;
+    }
+
+
+    if (rewardDistance === 0) {
+
+        alert(
+            "Entry and Take Profit cannot be the same."
+        );
 
         return;
     }
 
-    if (rewardDistance <= 0) {
-
-        alert("Take Profit must be different from Entry.");
-
-        return;
-    }
 
     var positionSize =
         riskAmount /
@@ -122,29 +143,34 @@ document.getElementById("analyze").onclick = function() {
     var riskLevel =
         document.getElementById("riskLevel");
 
+
     if (risk <= 2) {
 
-        riskLevel.innerHTML =
-            "LOW";
+        riskLevel.innerHTML = "LOW";
+
+        riskLevel.style.color = "#00ff88";
 
     } else if (risk <= 5) {
 
-        riskLevel.innerHTML =
-            "MEDIUM";
+        riskLevel.innerHTML = "MEDIUM";
+
+        riskLevel.style.color = "#ffd166";
 
     } else {
 
-        riskLevel.innerHTML =
-            "HIGH";
+        riskLevel.innerHTML = "HIGH";
+
+        riskLevel.style.color = "#ff4d6d";
     }
 
 
     // =========================
-    // DISPLAY TREND
+    // TREND DISPLAY
     // =========================
 
     var trendDisplay =
         document.getElementById("trendDisplay");
+
 
     if (trend === "bullish") {
 
@@ -165,7 +191,91 @@ document.getElementById("analyze").onclick = function() {
 
 
     // =========================
-    // PCS AI DECISION ENGINE
+    // CONFIDENCE SCORE
+    // =========================
+
+    var confidence = 0;
+
+
+    // Trend
+    if (trend === "bullish" || trend === "bearish") {
+        confidence += 20;
+    }
+
+
+    // PCS
+    if (pcs === "yes") {
+        confidence += 20;
+    }
+
+
+    // Heiken Ashi
+    if (heiken === "yes") {
+        confidence += 20;
+    }
+
+
+    // Support / Resistance
+    if (support === "yes") {
+        confidence += 20;
+    }
+
+
+    // Risk / Reward
+    if (riskReward >= 2) {
+        confidence += 20;
+    }
+
+
+    // Display confidence
+
+    document.getElementById(
+        "confidenceValue"
+    ).innerHTML =
+        confidence + "%";
+
+
+    document.getElementById(
+        "confidenceFill"
+    ).style.width =
+        confidence + "%";
+
+
+    var confidenceStatus =
+        document.getElementById(
+            "confidenceStatus"
+        );
+
+
+    if (confidence >= 100) {
+
+        confidenceStatus.innerHTML =
+            "🟢 VERY STRONG";
+
+    } else if (confidence >= 80) {
+
+        confidenceStatus.innerHTML =
+            "🟢 STRONG";
+
+    } else if (confidence >= 60) {
+
+        confidenceStatus.innerHTML =
+            "🟡 MODERATE";
+
+    } else if (confidence >= 40) {
+
+        confidenceStatus.innerHTML =
+            "🟠 WEAK";
+
+    } else {
+
+        confidenceStatus.innerHTML =
+            "🔴 VERY WEAK";
+    }
+
+
+    // =========================
+    // SIGNAL
     // =========================
 
     var signal =
@@ -175,7 +285,9 @@ document.getElementById("analyze").onclick = function() {
         document.getElementById("reason");
 
 
-    // RISK ABOVE 5% = WAIT
+    // =========================
+    // RISK ABOVE 5%
+    // =========================
 
     if (risk > 5) {
 
@@ -196,11 +308,13 @@ document.getElementById("analyze").onclick = function() {
     // =========================
 
     else if (
+
         trend === "bullish" &&
         pcs === "yes" &&
         heiken === "yes" &&
         support === "yes" &&
         riskReward >= 2
+
     ) {
 
         signal.innerHTML =
@@ -229,11 +343,13 @@ document.getElementById("analyze").onclick = function() {
     // =========================
 
     else if (
+
         trend === "bearish" &&
         pcs === "yes" &&
         heiken === "yes" &&
         support === "yes" &&
         riskReward >= 2
+
     ) {
 
         signal.innerHTML =
