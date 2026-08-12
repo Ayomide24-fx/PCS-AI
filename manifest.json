@@ -1,0 +1,10 @@
+{
+  "name": "PCS AI Assistant",
+  "short_name": "PCS AI",
+  "description": "Precision Confirmation Strategy AI Trading Assistant",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070b12",
+  "theme_color": "#00eaff",
+  "orientation": "portrait"
+}
