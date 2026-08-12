@@ -99,6 +99,10 @@ strong {
     color: #00ff88;
 }
 
+.bearish {
+    color: #ff4d6d;
+}
+
 label {
     display: block;
     text-align: left;
@@ -116,6 +120,12 @@ select {
     color: white;
     border: 1px solid #263548;
     border-radius: 8px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #00eaff;
 }
 
 button {
@@ -128,6 +138,10 @@ button {
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .signal-panel {
@@ -156,6 +170,50 @@ button {
     font-size: 12px;
 }
 
+
+/* CONFIDENCE */
+
+.confidence-box {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #263548;
+}
+
+.confidence-title {
+    color: #7d8b9c;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.confidence-bar {
+    width: 100%;
+    height: 10px;
+    background: #080d15;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.confidence-fill {
+    width: 0%;
+    height: 100%;
+    background: #00ff88;
+    transition: width 0.4s ease;
+}
+
+#confidenceValue {
+    color: #00eaff;
+    margin: 10px 0 5px;
+}
+
+#confidenceStatus {
+    color: #aab5c2;
+    font-size: 11px;
+}
+
+
+/* TRADE GRID */
+
 .trade-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -171,4 +229,4 @@ footer {
     color: #465262;
     font-size: 10px;
     padding: 15px;
-  }
+}
