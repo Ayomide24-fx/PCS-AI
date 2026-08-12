@@ -1105,3 +1105,110 @@ app.listen(
 
     }
 );
+// =====================================================
+// TELEGRAM NOTIFICATION TEST
+// =====================================================
+
+app.get("/api/telegram/test", async (req, res) => {
+
+    try {
+
+        const token =
+            process.env.TELEGRAM_BOT_TOKEN;
+
+        const chatId =
+            process.env.TELEGRAM_CHAT_ID;
+
+
+        if (!token || !chatId) {
+
+            return res.status(500).json({
+
+                status: "error",
+
+                message:
+                    "Telegram environment variables are missing"
+
+            });
+
+        }
+
+
+        const message =
+            "🤖 PCS AI\n\n" +
+            "✅ Telegram connection successful!\n\n" +
+            "PCS AI notification system is online.";
+
+
+        const response =
+            await fetch(
+                `https://api.telegram.org/bot${token}/sendMessage`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        chat_id: chatId,
+
+                        text: message
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.ok) {
+
+            return res.status(500).json({
+
+                status: "error",
+
+                telegram: data
+
+            });
+
+        }
+
+
+        res.json({
+
+            status: "success",
+
+            message:
+                "Telegram notification sent"
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Telegram error:",
+            error
+        );
+
+
+        res.status(500).json({
+
+            status: "error",
+
+            message:
+                "Telegram connection failed"
+
+        });
+
+    }
+
+});
