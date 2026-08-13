@@ -146,7 +146,101 @@ async function getMarketData(
 
 }
 
+// =====================================================
+// PCS AI RISK CHECK + NOTIFICATION CONNECTION
+// =====================================================
 
+async function checkPCSRisk(tradeData) {
+
+    try {
+
+        const response =
+            await fetch(
+                PCS_BACKEND + "/api/risk/check",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            tradeData
+                        )
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Risk check request failed"
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "PCS AI Risk Check:",
+            result
+        );
+
+
+        // -------------------------------------------------
+        // TRADE APPROVED
+        // -------------------------------------------------
+
+        if (result.approved === true) {
+
+            console.log(
+                "🟢 PCS AI TRADE APPROVED"
+            );
+
+            return result;
+
+        }
+
+
+        // -------------------------------------------------
+        // TRADE BLOCKED
+        // -------------------------------------------------
+
+        console.warn(
+            "🔴 PCS AI TRADE BLOCKED:",
+            result.reason
+        );
+
+
+        return result;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "PCS AI risk connection error:",
+            error
+        );
+
+
+        return {
+
+            approved: false,
+
+            reason:
+                "Unable to contact PCS AI risk engine."
+
+        };
+
+    }
+
+}
 // =====================================================
 // UPDATE MARKET DATA
 // =====================================================
