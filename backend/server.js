@@ -347,23 +347,24 @@ async function sendTelegramMessage(message) {
 
 
         if (
-            !response.ok ||
-            !data.ok
-        ) {
+    !response.ok ||
+    !data.ok
+) {
 
-            console.error(
-                "Telegram API error:",
-                data
-            );
+    console.error(
+        "Telegram API error:",
+        data
+    );
 
-            return {
+    return {
 
-                sent: false,
+        sent: false,
 
-                reason:
-                    "Telegram API rejected message"
+        reason:
+            data.description ||
+            "Telegram API rejected message"
 
-            };
+    };
 
         }
 
