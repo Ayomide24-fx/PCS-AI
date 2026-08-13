@@ -1630,13 +1630,84 @@ app.get(
 
 
 // =====================================================
+// TELEGRAM TEST
+// =====================================================
+
+app.get(
+    "/api/telegram/test",
+    async (req, res) => {
+
+        try {
+
+            const result =
+                await sendTelegramMessage(
+                    "🤖 PCS AI TEST\n\n" +
+                    "Telegram notification system is working.\n\n" +
+                    "System: PCS AI\n" +
+                    "Status: ONLINE"
+                );
+
+
+            if (!result.sent) {
+
+                return res
+                    .status(500)
+                    .json({
+
+                        status: "error",
+
+                        message:
+                            result.reason
+
+                    });
+
+            }
+
+
+            return res.json({
+
+                status: "success",
+
+                message:
+                    "Telegram notification sent."
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Telegram test error:",
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+
+                    status: "error",
+
+                    message:
+                        error.message
+
+                });
+
+        }
+
+    }
+);
+
+
+// =====================================================
 // 404 HANDLER
 // =====================================================
 
 app.use(
     (req, res) => {
 
-        res.status(404)
+        res
+            .status(404)
             .json({
 
                 status:
@@ -1666,8 +1737,8 @@ app.use(
             error
         );
 
-
-        res.status(500)
+        res
+            .status(500)
             .json({
 
                 status:
@@ -1680,36 +1751,6 @@ app.use(
 
     }
 );
-
-
-// =====================================================
-// TELEGRAM TEST
-// =====================================================
-
-app.get("/api/telegram/test", async (req, res) => {
-
-    const result = await sendTelegramMessage(
-        "🤖 PCS AI TEST\n\n" +
-        "Telegram notification system is working.\n\n" +
-        "System: PCS AI\n" +
-        "Status: ONLINE"
-    );
-
-    if (!result.sent) {
-
-        return res.status(500).json({
-            status: "error",
-            message: result.reason
-        });
-
-    }
-
-    res.json({
-        status: "success",
-        message: "Telegram notification sent."
-    });
-
-});
 
 
 // =====================================================
