@@ -1,7 +1,7 @@
 {
   "name": "pcs-ai-backend",
-  "version": "1.0.0",
-  "description": "PCS AI trading backend",
+  "version": "2.4.0",
+  "description": "PCS AI trading backend with MT5 market data and risk engine",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
