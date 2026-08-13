@@ -1540,48 +1540,29 @@ app.get(
 
             const result =
                 await sendTelegramMessage(
-
                     "🤖 PCS AI TEST\n\n" +
-
                     "Telegram notification system is working.\n\n" +
-
                     "System: PCS AI\n" +
-
                     "Status: ONLINE"
-
                 );
-
 
             if (!result.sent) {
 
                 return res
                     .status(500)
                     .json({
-
-                        status:
-                            "error",
-
-                        message:
-                            result.reason
-
+                        status: "error",
+                        message: result.reason
                     });
 
             }
 
-
             return res.json({
-
-                status:
-                    "success",
-
-                message:
-                    "Telegram notification sent."
-
+                status: "success",
+                message: "Telegram notification sent."
             });
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Telegram test error:",
@@ -1591,18 +1572,17 @@ app.get(
             return res
                 .status(500)
                 .json({
-
-                    status:
-                        "error",
-
-                    message:
-                        error.message
-
+                    status: "error",
+                    message: error.message
                 });
 
         }
 
-   // =====================================================
+    }
+);
+
+
+// =====================================================
 // 404 HANDLER
 // =====================================================
 
@@ -1612,16 +1592,9 @@ app.use(
         res
             .status(404)
             .json({
-
-                status:
-                    "error",
-
-                message:
-                    "PCS AI endpoint not found.",
-
-                path:
-                    req.originalUrl
-
+                status: "error",
+                message: "PCS AI endpoint not found.",
+                path: req.originalUrl
             });
 
     }
@@ -1643,13 +1616,8 @@ app.use(
         res
             .status(500)
             .json({
-
-                status:
-                    "error",
-
-                message:
-                    "Internal PCS AI server error."
-
+                status: "error",
+                message: "Internal PCS AI server error."
             });
 
     }
