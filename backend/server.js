@@ -1686,6 +1686,34 @@ app.use(
 // START SERVER
 // =====================================================
 
+// =====================================================
+// TELEGRAM TEST
+// =====================================================
+
+app.get("/api/telegram/test", async (req, res) => {
+
+    const result = await sendTelegramMessage(
+        "🤖 PCS AI TEST\n\n" +
+        "Telegram notification system is working.\n\n" +
+        "System: PCS AI\n" +
+        "Status: ONLINE"
+    );
+
+    if (!result.sent) {
+
+        return res.status(500).json({
+            status: "error",
+            message: result.reason
+        });
+
+    }
+
+    res.json({
+        status: "success",
+        message: "Telegram notification sent."
+    });
+
+});
 app.listen(
     PORT,
     () => {
