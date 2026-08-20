@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PCS AI Master</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00eaff">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header>
+
+        <div class="logo">🤖</div>
+
+        <div>
+            <h1>PCS AI</h1>
+            <p>PRECISION CONFIRMATION STRATEGY</p>
+        </div>
+
+        <div class="status">
+            <span></span>
+            <span id="headerStatus">CONNECTING</span>
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MARKET CONTROL
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>🌍 MARKET CONTROL</span>
+            <span class="live" id="scannerStatus">● SCANNER</span>
+        </div>
+
+        <label for="market">Market</label>
+
+        <select id="market">
+            <option value="XAUUSD">XAUUSD</option>
+        </select>
+
+
+        <label for="timeframe">Timeframe</label>
+
+        <select id="timeframe">
+
+            <option value="1m">1 Minute</option>
+            <option value="5m" selected>5 Minutes</option>
+            <option value="15m">15 Minutes</option>
+            <option value="30m">30 Minutes</option>
+            <option value="1h">1 Hour</option>
+            <option value="4h">4 Hours</option>
+            <option value="1d">1 Day</option>
+
+        </select>
+
+
+        <div class="market-price">
+
+            <small>CURRENT PRICE</small>
+
+            <strong id="currentPrice">
+                WAITING FOR DATA
+            </strong>
+
+            <span id="priceStatus">
+                ● DATA CONNECTION PENDING
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TRADING MODE
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+
+            <span>🤖 TRADING MODE</span>
+
+            <span id="modeStatus" class="live">
+                ● READY
+            </span>
+
+        </div>
+
+
+        <label for="tradingMode">
+            Trading Mode
+        </label>
+
+        <select id="tradingMode">
+
+            <option value="standard">
+                MODE 1 — STANDARD
+            </option>
+
+            <option value="scalper">
+                MODE 2 — SCALPER
+            </option>
+
+            <option value="compounding">
+                MODE 3 — COMPOUNDING
+            </option>
+
+            <option value="prop">
+                MODE 4 — PROP
+            </option>
+
+        </select>
+
+
+        <div
+            class="mode-info"
+            id="modeInfo">
+
+            Standard mode:
+            controlled PCS trading with normal risk management.
+
+        </div>
+
+
+        <div class="switch-row">
+
+            <span>
+                Trading Environment
+            </span>
+
+            <button
+                id="environment"
+                class="environment demo"
+                type="button">
+
+                🧪 DEMO
+
+            </button>
+
+        </div>
+
+
+        <div class="mode-grid">
+
+            <div>
+
+                <small>POSITION LIMIT</small>
+
+                <strong id="positionLimit">
+                    3 / PAIR
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <small>RISK ENGINE</small>
+
+                <strong id="lotEngine">
+                    ADAPTIVE
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PROP SETTINGS
+             ================================================= -->
+
+        <div
+            id="propSettings"
+            class="mode-settings"
+            hidden>
+
+            <div class="mode-settings-title">
+                🛡️ PROP FIRM RISK CONTROL
+            </div>
+
+
+            <label for="propMaxDrawdown">
+                Maximum Drawdown %
+            </label>
+
+            <input
+                type="number"
+                id="propMaxDrawdown"
+                placeholder="Example: 10"
+                min="0"
+                step="0.1">
+
+
+            <label for="propDailyLoss">
+                Daily Loss Limit %
+            </label>
+
+            <input
+                type="number"
+                id="propDailyLoss"
+                placeholder="Example: 5"
+                min="0"
+                step="0.1">
+
+
+            <label for="propProfitTarget">
+                Profit Target %
+            </label>
+
+            <input
+                type="number"
+                id="propProfitTarget"
+                placeholder="Example: 10"
+                min="0"
+                step="0.1">
+
+
+            <div
+                id="propRuleStatus"
+                class="prop-rule-status">
+
+                🟡 PROP RULES NOT CONFIGURED
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MULTI MARKET SCANNER
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+
+            <span>📡 MARKET SCANNER</span>
+
+            <span
+                class="live"
+                id="scannerReady">
+
+                ● READY
+
+            </span>
+
+        </div>
+
+
+        <div class="scanner-list">
+
+            <div class="scanner-row">
+
+                <div>
+                    <strong>XAUUSD</strong>
+                    <small>5M</small>
+                </div>
+
+                <div
+                    class="scanner-price"
+                    id="scanXAUUSD">
+                    --
+                </div>
+
+                <div
+                    class="scanner-signal wait"
+                    id="signalXAUUSD">
+                    WAIT
+                </div>
+
+            </div>
+
+
+            <div class="scanner-row">
+
+                <div>
+                    <strong>EURUSD</strong>
+                    <small>5M</small>
+                </div>
+
+                <div
+                    class="scanner-price"
+                    id="scanEURUSD">
+                    --
+                </div>
+
+                <div
+                    class="scanner-signal wait"
+                    id="signalEURUSD">
+                    WAIT
+                </div>
+
+            </div>
+
+
+            <div class="scanner-row">
+
+                <div>
+                    <strong>GBPUSD</strong>
+                    <small>5M</small>
+                </div>
+
+                <div
+                    class="scanner-price"
+                    id="scanGBPUSD">
+                    --
+                </div>
+
+                <div
+                    class="scanner-signal wait"
+                    id="signalGBPUSD">
+                    WAIT
+                </div>
+
+            </div>
+
+
+            <div class="scanner-row">
+
+                <div>
+                    <strong>BTCUSD</strong>
+                    <small>5M</small>
+                </div>
+
+                <div
+                    class="scanner-price"
+                    id="scanBTCUSD">
+                    --
+                </div>
+
+                <div
+                    class="scanner-signal wait"
+                    id="signalBTCUSD">
+                    WAIT
+                </div>
+
+            </div>
+
+
+            <div class="scanner-row">
+
+                <div>
+                    <strong>NAS100</strong>
+                    <small>5M</small>
+                </div>
+
+                <div
+                    class="scanner-price"
+                    id="scanNAS100">
+                    --
+                </div>
+
+                <div
+                    class="scanner-signal wait"
+                    id="signalNAS100">
+                    WAIT
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PCS CONFIRMATION
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>🔎 PCS CONFIRMATION</span>
+        </div>
+
+
+        <label for="trend">
+            Market Trend
+        </label>
+
+        <select id="trend">
+
+            <option value="bullish">
+                BULLISH
+            </option>
+
+            <option value="bearish">
+                BEARISH
+            </option>
+
+        </select>
+
+
+        <label for="pcs">
+            PCS Confirmation
+        </label>
+
+        <select id="pcs">
+
+            <option value="yes">
+                YES
+            </option>
+
+            <option value="no">
+                NO
+            </option>
+
+        </select>
+
+
+        <label for="heiken">
+            Heikin Ashi
+        </label>
+
+        <select id="heiken">
+
+            <option value="yes">
+                YES
+            </option>
+
+            <option value="no">
+                NO
+            </option>
+
+        </select>
+
+
+        <label for="support">
+            Support / Resistance
+        </label>
+
+        <select id="support">
+
+            <option value="yes">
+                YES
+            </option>
+
+            <option value="no">
+                NO
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- =====================================================
+         TRADE SETUP
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>📋 TRADE SETUP</span>
+        </div>
+
+
+        <label for="balance">
+            Account Balance
+        </label>
+
+        <input
+            type="number"
+            id="balance"
+            placeholder="Account Balance"
+            step="any"
+            min="0">
+
+
+        <label for="risk">
+            Risk %
+        </label>
+
+        <input
+            type="number"
+            id="risk"
+            placeholder="Risk %"
+            step="any"
+            min="0">
+
+
+        <label for="entry">
+            Entry Price
+        </label>
+
+        <input
+            type="number"
+            id="entry"
+            placeholder="Entry Price"
+            step="any">
+
+
+        <label for="stop">
+            Stop Loss
+        </label>
+
+        <input
+            type="number"
+            id="stop"
+            placeholder="Stop Loss"
+            step="any">
+
+
+        <label for="takeProfit">
+            Take Profit
+        </label>
+
+        <input
+            type="number"
+            id="takeProfit"
+            placeholder="Take Profit"
+            step="any">
+
+
+        <label for="value">
+            Value per 1.00 Price Move
+        </label>
+
+        <input
+            type="number"
+            id="value"
+            placeholder="Value per 1.00 price move"
+            step="any"
+            min="0">
+
+
+        <button
+            id="analyze"
+            type="button">
+
+            🔎 ANALYZE PCS
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         SIGNAL
+         ===================================================== -->
+
+    <section class="signal-panel">
+
+        <p class="signal-title">
+            PCS AI SIGNAL
+        </p>
+
+
+        <div
+            id="signal"
+            class="signal">
+
+            🟡 WAIT
+
+        </div>
+
+
+        <p
+            id="reason"
+            class="reason">
+
+            Waiting for analysis...
+
+        </p>
+
+
+        <div class="confidence-box">
+
+            <p class="confidence-title">
+                PCS TRADE CONFIDENCE
+            </p>
+
+
+            <div class="confidence-bar">
+
+                <div
+                    id="confidenceFill"
+                    class="confidence-fill">
+                </div>
+
+            </div>
+
+
+            <h2 id="confidenceValue">
+                0%
+            </h2>
+
+
+            <p id="confidenceStatus">
+                WAITING FOR ANALYSIS
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TRADE ANALYSIS
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>📊 TRADE ANALYSIS</span>
+        </div>
+
+
+        <div class="trade-grid">
+
+            <div>
+                <small>RISK AMOUNT</small>
+                <strong id="riskResult">$--</strong>
+            </div>
+
+
+            <div>
+                <small>SL DISTANCE</small>
+                <strong id="distanceResult">--</strong>
+            </div>
+
+
+            <div>
+                <small>POSITION SIZE</small>
+                <strong id="positionResult">--</strong>
+            </div>
+
+
+            <div>
+                <small>TP DISTANCE</small>
+                <strong id="rewardResult">--</strong>
+            </div>
+
+
+            <div>
+                <small>R:R</small>
+                <strong id="rrResult" class="cyan">--</strong>
+            </div>
+
+
+            <div>
+                <small>RISK LEVEL</small>
+                <strong id="riskLevel">--</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         NOTIFICATIONS
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+
+            <span>🔔 PCS AI NOTIFICATIONS</span>
+
+            <span
+                id="notificationStatus"
+                class="live">
+
+                ● READY
+
+            </span>
+
+        </div>
+
+
+        <div
+            id="notificationBox"
+            class="empty-state">
+
+            No new notifications
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         OPEN POSITIONS
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+
+            <span>📂 OPEN POSITIONS</span>
+
+            <span id="openCount">0</span>
+
+        </div>
+
+
+        <div
+            id="openPositions"
+            class="empty-state">
+
+            No active trades
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TRADE HISTORY
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+
+            <span>🧾 TRADE HISTORY</span>
+
+            <span id="historyCount">0</span>
+
+        </div>
+
+
+        <div
+            id="tradeHistory"
+            class="history">
+
+            <div class="empty-state">
+                No trades recorded yet
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SYSTEM STATUS
+         ===================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            <span>🧠 PCS AI SYSTEM</span>
+        </div>
+
+
+        <div class="backend-status">
+
+            <span class="backend-status-label">
+                Backend
+            </span>
+
+            <strong
+                id="backendStatus"
+                class="backend-status-value backend-loading">
+
+                CONNECTING...
+
+            </strong>
+
+        </div>
+
+
+        <div class="backend-status">
+
+            <span class="backend-status-label">
+                Version
+            </span>
+
+            <strong
+                id="backendVersion"
+                class="backend-status-value">
+
+                --
+
+            </strong>
+
+        </div>
+
+
+        <div class="backend-status">
+
+            <span class="backend-status-label">
+                Execution
+            </span>
+
+            <strong
+                id="executionStatus"
+                class="backend-status-value">
+
+                DEMO
+
+            </strong>
+
+        </div>
+
+
+        <div class="backend-status">
+
+            <span class="backend-status-label">
+                Live Trading
+            </span>
+
+            <strong
+                id="liveTradingStatus"
+                class="backend-status-value backend-offline">
+
+                🔒 DISABLED
+
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>Market Scanner</span>
+
+            <strong
+                id="systemScanner"
+                class="pending">
+
+                CONNECTING
+
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>TradingView Connection</span>
+
+            <strong
+                id="systemTradingView"
+                class="pending">
+
+                PENDING
+
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>MT5 Connection</span>
+
+            <strong
+                id="systemMT5"
+                class="pending">
+
+                CONFIGURED
+
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>AI Memory</span>
+
+            <strong class="ready">
+                READY
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>Trade History</span>
+
+            <strong class="ready">
+                READY
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>Risk Engine</span>
+
+            <strong class="ready">
+                READY
+            </strong>
+
+        </div>
+
+
+        <div class="system-row">
+
+            <span>Telegram</span>
+
+            <strong
+                id="telegramStatus"
+                class="pending">
+
+                CONFIGURED
+
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer>
+
+        PCS AI Master • Frontend v3.3 • Phase 3
+
+    </footer>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN JAVASCRIPT
+     ===================================================== -->
+
+<script src="script.js"></script>
+
+
+<!-- =====================================================
+     SERVICE WORKER
+     ===================================================== -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            navigator.serviceWorker
+                .register("./service-worker.js")
+                .then(function () {
+
+                    console.log(
+                        "PCS AI service worker registered."
+                    );
+
+                })
+                .catch(function (error) {
+
+                    console.error(
+                        "Service worker error:",
+                        error
+                    );
+
+                });
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+          </html>
